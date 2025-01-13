@@ -5,7 +5,7 @@ from app.database import Base
 class Rooms(Base):
     __tablename__ = 'rooms'
 
-    id = Column(Integer, primary_key=True, nullable=False)
+    id = Column(Integer, primary_key=True)
     hotel_id = Column(ForeignKey("hotels.id"), nullable=False)
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
