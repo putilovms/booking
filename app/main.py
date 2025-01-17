@@ -1,4 +1,3 @@
-from fastapi import Depends
 from fastapi import FastAPI, Query
 from typing import Optional
 from datetime import date

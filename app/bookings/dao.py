@@ -52,3 +52,45 @@ class BookingDAO(BaseDAO):
                 return new_booking.scalar()
             else:
                 return None
+
+    @classmethod
+    async def find_all(cls, user_id: int):
+        async with async_session_maker() as session:
+            '''
+            select
+                bookings.room_id,
+                bookings.user_id,
+                bookings.date_from,
+                bookings.date_to,
+                bookings.price,
+                bookings.total_cost,
+                bookings.total_days,
+                rooms.image_id,
+                rooms.name,
+                rooms.description,
+                rooms.services
+            from bookings
+            join rooms on bookings.room_id = rooms.id 
+            where user_id = 3
+            '''
+            query = select(
+                Bookings.room_id,
+                Bookings.user_id,
+                Bookings.date_from,
+                Bookings.date_to,
+                Bookings.price,
+                Bookings.total_cost,
+                Bookings.total_days,
+                Rooms.image_id,
+                Rooms.name,
+                Rooms.description,
+                Rooms.services
+            ).select_from(
+                Bookings
+            ).join(
+                Rooms, Bookings.room_id == Rooms.id
+            ).where(
+                Bookings.user_id == user_id
+            )
+            bookings = await session.execute(query)
+            return bookings.mappings().all()

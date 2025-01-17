@@ -1,5 +1,5 @@
 from datetime import date
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from app.bookings.dao import BookingDAO
 from app.bookings.schemas import SBooking
 from app.users.auth import get_current_user
@@ -25,3 +25,14 @@ async def add_booking(
     booking = await BookingDAO.add(user.id, room_id, date_from, date_to)
     if not booking:
         raise excep.RoomCannotBeBooked
+
+
+@router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)
+async def delete_booking(
+    id: int,
+    user: Users = Depends(get_current_user)
+):
+    result = await BookingDAO.delete(id=id, user_id=user.id)
+    if not result:
+        raise excep.BookingCannotBeDeleted
+    return {"message": "Resource deleted successfully"}
