@@ -1,9 +1,11 @@
 from datetime import date
+
+from sqlalchemy import and_, func, or_, select
+
 from app.bookings.models import Bookings
-from app.rooms.models import Rooms
 from app.dao.base import BaseDAO
-from app.database import engine, async_session_maker
-from sqlalchemy import and_, func, insert, or_, select
+from app.database import async_session_maker
+from app.rooms.models import Rooms
 
 
 class RoomDAO(BaseDAO):
@@ -27,7 +29,9 @@ class RoomDAO(BaseDAO):
                 rooms.services,
                 rooms.quantity,
                 rooms.image_id,
-                rooms.price * EXTRACT(DAY FROM '2025-01-20'::timestamp - '2025-01-15'::timestamp) as total_cost,
+                rooms.price * EXTRACT(
+                    DAY FROM '2025-01-20'::timestamp - '2025-01-15'::timestamp
+                ) as total_cost,
                 rooms.quantity - count(booked_rooms.room_id) as rooms_left
             from rooms
             left join booked_rooms on booked_rooms.room_id = rooms.id 

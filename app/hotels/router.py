@@ -1,11 +1,10 @@
-import asyncio
 from datetime import date
-from fastapi_cache.decorator import cache
+
 from fastapi import APIRouter
-from pydantic import TypeAdapter
+from fastapi_cache.decorator import cache
+
 from app.hotels.dao import HotelDAO
 from app.hotels.schemas import SHotel, SHotels
-
 
 router = APIRouter(
     prefix="/hotels",
@@ -15,7 +14,11 @@ router = APIRouter(
 
 @router.get("/{location}")
 @cache(expire=20)
-async def get_hotels_by_location(location: str, date_from: date, date_to: date) -> list[SHotel]:
+async def get_hotels_by_location(
+    location: str,
+    date_from: date,
+    date_to: date
+) -> list[SHotels]:
     hotels = await HotelDAO.find_all(location, date_from, date_to)
     # await asyncio.sleep(3)
     # ta = TypeAdapter(list[SHotels])

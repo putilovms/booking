@@ -1,10 +1,12 @@
-from fastapi import UploadFile, APIRouter
 import shutil
+
+from fastapi import APIRouter, UploadFile
 
 router = APIRouter(
     prefix="/images",
     tags=["Загрузка изображений"]
 )
+
 
 @router.post("/hotels")
 async def add_hotel_image(name: int, file: UploadFile):

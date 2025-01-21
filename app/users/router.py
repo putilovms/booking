@@ -1,9 +1,15 @@
 from fastapi import APIRouter, Depends, Response
+
+import app.exceptions as excep
+from app.users.auth import (
+    authenticate_user,
+    create_access_token,
+    get_current_user,
+    get_password_hash,
+)
+from app.users.dao import UsersDAO
 from app.users.models import Users
 from app.users.schemas import SUserAuth
-from app.users.dao import UsersDAO
-from app.users.auth import authenticate_user, create_access_token, get_current_user, get_password_hash
-import app.exceptions as excep
 
 router = APIRouter(
     prefix="/auth",
@@ -21,7 +27,7 @@ async def register_user(user_data: SUserAuth):
 
 
 @router.post('/login')
-async def register_user(response: Response, user_data: SUserAuth):
+async def login_user(response: Response, user_data: SUserAuth):
     user = await authenticate_user(user_data.email, user_data.password)
     if not user:
         raise excep.IncorrectEmailOrPasswordException

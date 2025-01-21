@@ -9,3 +9,11 @@ migrations:
 .PHONY: update
 update:
 	alembic upgrade head
+
+.PHONY: lint-fix
+lint-fix:
+	uv run ruff check --fix .
+
+.PHONY: lint
+lint:
+	uv run ruff check .

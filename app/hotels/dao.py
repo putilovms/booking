@@ -1,9 +1,11 @@
 from datetime import date
-from app.hotels.models import Hotels
-from app.dao.base import BaseDAO
-from app.database import engine, async_session_maker
-from sqlalchemy import and_, func, insert, or_, select
+
+from sqlalchemy import and_, func, or_, select
+
 from app.bookings.models import Bookings
+from app.dao.base import BaseDAO
+from app.database import async_session_maker
+from app.hotels.models import Hotels
 from app.rooms.models import Rooms
 
 
@@ -28,7 +30,8 @@ class HotelDAO(BaseDAO):
                 hotels.services,
                 hotels.rooms_quantity,
                 hotels.image_id,
-                hotels.rooms_quantity - count(booked_rooms.room_id) as rooms_left
+                hotels.rooms_quantity - count(booked_rooms.room_id)
+                  as rooms_left
             from hotels 
             join rooms on hotels.id = rooms.hotel_id 
             left join booked_rooms on booked_rooms.room_id = rooms.id 
