@@ -4,7 +4,8 @@ from fastapi import APIRouter, Depends, status
 
 import app.exceptions as excep
 from app.bookings.dao import BookingDAO
-from app.bookings.schemas import SBooking
+from app.bookings.schemas import SBooking, SBookingAdd
+from app.tasks.tasks import send_booking_confirmation_email
 from app.users.auth import get_current_user
 from app.users.models import Users
 
@@ -29,6 +30,9 @@ async def add_booking(
     booking = await BookingDAO.add(user.id, room_id, date_from, date_to)
     if not booking:
         raise excep.RoomCannotBeBooked
+    booking_dict = SBookingAdd.model_validate(booking).model_dump()
+    send_booking_confirmation_email.delay(booking_dict, user.email)
+    return booking_dict
 
 
 @router.delete('/{id}', status_code=status.HTTP_204_NO_CONTENT)

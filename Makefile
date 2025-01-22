@@ -17,3 +17,11 @@ lint-fix:
 .PHONY: lint
 lint:
 	uv run ruff check .
+
+.PHONY: celery
+celery:
+	celery -A app.tasks.celery:celery worker --loglevel=INFO
+
+.PHONY: flower
+flower:
+celery -A app.tasks.celery:celery flower

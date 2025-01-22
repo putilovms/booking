@@ -14,6 +14,7 @@ from app.images.router import router as router_images
 from app.pages.router import router as router_pages
 from app.rooms.router import router as router_rooms
 from app.users.router import router as router_users
+from app.config import settings
 
 origins = [
     'http://localhost:3000',
@@ -22,7 +23,8 @@ origins = [
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    redis = aioredis.from_url("redis://localhost")
+    redis = aioredis.from_url(
+        f"redis://{settings.REDIS_HOST}:{settings.REDIS_PORT}")
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
     yield
 
