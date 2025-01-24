@@ -13,3 +13,9 @@ async def get_rooms(
 ) -> list[SRooms]:
     rooms = await RoomDAO.find_all(hotel_id, date_from, date_to)
     return rooms
+
+
+@router.get("/rooms/all")
+async def get_rooms_all():
+    rooms = await RoomDAO._find_all()
+    return rooms

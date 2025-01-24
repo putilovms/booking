@@ -75,4 +75,4 @@ class HotelDAO(BaseDAO):
             hotels = hotels.mappings().all()
             available_hotels = list(
                 filter(lambda a: a['rooms_left'] > 0, hotels))
-            return (available_hotels)
+            return available_hotels

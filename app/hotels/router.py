@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("/{location}")
+@router.get("/location/{location}")
 @cache(expire=20)
 async def get_hotels_by_location(
     location: str,
@@ -31,3 +31,9 @@ async def get_hotel(id: int) -> SHotel:
     hotel = await HotelDAO.find_by_id(id)
     # return SHotel.model_validate(hotel).model_dump_json()
     return hotel
+
+
+@router.get("/all")
+async def get_hotels_all() -> list[SHotel]:
+    hotels = await HotelDAO._find_all()
+    return hotels

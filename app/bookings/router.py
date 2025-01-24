@@ -44,3 +44,9 @@ async def delete_booking(
     if not result:
         raise excep.BookingCannotBeDeleted
     return {"message": "Resource deleted successfully"}
+
+
+@router.get("/all")
+async def get_hotels_all():
+    bookings = await BookingDAO._find_all()
+    return bookings
