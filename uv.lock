@@ -377,6 +377,7 @@ dependencies = [
     { name = "celery" },
     { name = "fastapi", extra = ["all"] },
     { name = "fastapi-cache2", extra = ["redis"] },
+    { name = "fastapi-versioning" },
     { name = "flower" },
     { name = "passlib" },
     { name = "pillow" },
@@ -409,6 +410,7 @@ requires-dist = [
     { name = "celery", specifier = ">=5.4.0" },
     { name = "fastapi", extras = ["all"], specifier = ">=0.115.6" },
     { name = "fastapi-cache2", extras = ["redis"], specifier = ">=0.2.2" },
+    { name = "fastapi-versioning", specifier = ">=0.10.0" },
     { name = "flower", specifier = ">=2.0.1" },
     { name = "passlib", specifier = ">=1.7.4" },
     { name = "pillow", specifier = ">=11.1.0" },
@@ -431,6 +433,19 @@ dev = [
     { name = "pytest", specifier = ">=8.3.4" },
     { name = "pytest-asyncio", specifier = ">=0.25.2" },
     { name = "ruff", specifier = ">=0.9.2" },
+]
+
+[[package]]
+name = "fastapi-versioning"
+version = "0.10.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "fastapi" },
+    { name = "starlette" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e0/d9/0e81a2680c960b84b3f5b8c434259ad5f7731737be27b5bee0cb6d7b796f/fastapi_versioning-0.10.0.tar.gz", hash = "sha256:5c18ea4e9ae1afd39c9e5bed1c240bf1cabdc75217579af78249ccb651c7b5b5", size = 3945 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/2b/5a/d393ce89b402d104c2c3df09b83df222ad7d2307dc7f34010acd6cd56f50/fastapi_versioning-0.10.0-py3-none-any.whl", hash = "sha256:afe0ad7a56383b884c399341260bd3301b40e5a1cf9f6dc4211a349489087e1b", size = 4868 },
 ]
 
 [[package]]

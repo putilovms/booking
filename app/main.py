@@ -23,6 +23,8 @@ from app.users.models import Users
 from app.users.router import router as router_users
 from app.logger import logger
 
+from fastapi_versioning import VersionedFastAPI
+
 origins = [
     'http://localhost:3000',
 ]
@@ -54,7 +56,6 @@ app.add_middleware(
     ],
 )
 
-app.mount('/static', StaticFiles(directory='app/static'), "static")
 
 app.include_router(router_hotels)
 app.include_router(router_rooms)
@@ -62,16 +63,6 @@ app.include_router(router_users)
 app.include_router(router_bookings)
 app.include_router(router_pages)
 app.include_router(router_images)
-
-admin = Admin(
-    app,
-    engine,
-    authentication_backend=authentication_backend
-)
-admin.add_view(UsersAdmin)
-admin.add_view(BookingsAdmin)
-admin.add_view(HotelsAdmin)
-admin.add_view(RoomsAdmin)
 
 
 @app.middleware("http")
@@ -83,3 +74,21 @@ async def add_process_time_header(request: Request, call_next):
         "process_time": round(process_time, 4)
     })
     return response
+
+app = VersionedFastAPI(
+    app,
+    version_format='{major}',
+    prefix_format='/v{major}',
+)
+
+admin = Admin(
+    app,
+    engine,
+    authentication_backend=authentication_backend
+)
+admin.add_view(UsersAdmin)
+admin.add_view(BookingsAdmin)
+admin.add_view(HotelsAdmin)
+admin.add_view(RoomsAdmin)
+
+app.mount('/static', StaticFiles(directory='app/static'), "static")

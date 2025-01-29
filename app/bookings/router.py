@@ -8,6 +8,7 @@ from app.bookings.schemas import SBooking, SBookingAdd
 from app.tasks.tasks import send_booking_confirmation_email
 from app.users.auth import get_current_user
 from app.users.models import Users
+from fastapi_versioning import version
 
 router = APIRouter(
     prefix="/bookings",
@@ -23,6 +24,7 @@ async def get_bookings(
 
 
 @router.post('')
+@version(1)
 async def add_booking(
     room_id: int, date_from: date, date_to: date,
     user: Users = Depends(get_current_user)

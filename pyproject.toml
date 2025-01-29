@@ -10,6 +10,7 @@ dependencies = [
     "asyncpg>=0.30.0",
     "celery>=5.4.0",
     "fastapi-cache2[redis]>=0.2.2",
+    "fastapi-versioning>=0.10.0",
     "fastapi[all]>=0.115.6",
     "flower>=2.0.1",
     "passlib>=1.7.4",
