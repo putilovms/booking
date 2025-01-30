@@ -21,9 +21,11 @@ from app.pages.router import router as router_pages
 from app.rooms.router import router as router_rooms
 from app.users.models import Users
 from app.users.router import router as router_users
+from app.prometheus.router import router as router_prometheus
 from app.logger import logger
 
 from fastapi_versioning import VersionedFastAPI
+from prometheus_fastapi_instrumentator import Instrumentator
 
 origins = [
     'http://localhost:3000',
@@ -63,6 +65,7 @@ app.include_router(router_users)
 app.include_router(router_bookings)
 app.include_router(router_pages)
 app.include_router(router_images)
+app.include_router(router_prometheus)
 
 
 @app.middleware("http")
@@ -80,6 +83,12 @@ app = VersionedFastAPI(
     version_format='{major}',
     prefix_format='/v{major}',
 )
+
+instrumentator = Instrumentator(
+    should_group_status_codes=False,
+    excluded_handlers=[".*admin.*", "/metrics"],
+)
+Instrumentator().instrument(app).expose(app)
 
 admin = Admin(
     app,
