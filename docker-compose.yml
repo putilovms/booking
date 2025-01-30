@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:15
+    env_file:
+      - docker.env
+
+  redis:
+    image: redis:7
+
+  booking:
+    build: 
+      context: .
+    restart: always
+    env_file:
+      - docker.env
+    depends_on:
+      - db
+      - redis
+    command: ["/app/docker/app.sh"]
+    ports:
+      - 9000:8000
+
+  celery:
+    build: 
+      context: .
+    env_file:
+      - docker.env
+    depends_on:
+      - redis
+    command: ["/app/docker/celery.sh", "celery"]
+    
+  flower:
+    build: 
+      context: .
+    env_file:
+      - docker.env
+    depends_on:
+      - redis
+    command: ["/app/docker/celery.sh", "flower"]
+    ports:
+      - 5050:5555
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - '8888:8080'
