@@ -1,10 +1,8 @@
-from httpx import AsyncClient
 import pytest
-
-from app.tests.conftest import authenticated_ac
+from httpx import AsyncClient
 
 BOOKINGS = [
-    *[(4, "2030-05-01", "2030-05-01", 200)]*8,
+    *[(4, "2030-05-01", "2030-05-01", 200)] * 8,
     (4, "2030-05-01", "2030-05-01", 409)
 ]
 

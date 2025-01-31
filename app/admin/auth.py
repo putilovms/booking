@@ -1,8 +1,7 @@
-from sqladmin import Admin
 from sqladmin.authentication import AuthenticationBackend
 from starlette.requests import Request
 from starlette.responses import RedirectResponse
-import app.exceptions as excep
+
 from app.users.auth import authenticate_user, create_access_token, get_current_user
 
 
@@ -26,10 +25,16 @@ class AdminAuth(AuthenticationBackend):
     async def authenticate(self, request: Request) -> bool:
         token = request.session.get("token")
         if not token:
-            return RedirectResponse(request.url_for("admin:login"), status_code=302)
+            return RedirectResponse(
+                request.url_for("admin:login"),
+                status_code=302
+            )
         user = await get_current_user(token)
         if not user:
-            return RedirectResponse(request.url_for("admin:login"), status_code=302)
+            return RedirectResponse(
+                request.url_for("admin:login"),
+                status_code=302
+            )
         return True
 
 

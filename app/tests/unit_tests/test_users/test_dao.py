@@ -1,5 +1,6 @@
-from app.users.dao import UsersDAO
 import pytest
+
+from app.users.dao import UsersDAO
 
 USERS = [
     (1, "fedor@moloko.ru", True),

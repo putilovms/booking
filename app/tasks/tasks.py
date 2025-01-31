@@ -1,10 +1,12 @@
-from pydantic import EmailStr
-from app.tasks.celery import celery
-from PIL import Image
-from pathlib import Path
-from app.config import settings
-from app.tasks.email_templates import create_vooking_confirmation_templete
 import smtplib
+from pathlib import Path
+
+from PIL import Image
+from pydantic import EmailStr
+
+from app.config import settings
+from app.tasks.celery import celery
+from app.tasks.email_templates import create_vooking_confirmation_templete
 
 
 @celery.task

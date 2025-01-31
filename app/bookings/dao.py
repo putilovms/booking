@@ -2,11 +2,12 @@ from datetime import date
 
 from sqlalchemy import and_, func, insert, or_, select
 from sqlalchemy.exc import SQLAlchemyError
+
 from app.bookings.models import Bookings
 from app.dao.base import BaseDAO
 from app.database import async_session_maker
-from app.rooms.models import Rooms
 from app.logger import logger
+from app.rooms.models import Rooms
 
 
 class BookingDAO(BaseDAO):
@@ -38,7 +39,9 @@ class BookingDAO(BaseDAO):
                 get_room_left = select(
                     Rooms.quantity - func.count(booked_rooms.c.room_id)
                 ).select_from(Rooms).join(
-                    booked_rooms, booked_rooms.c.room_id == Rooms.id, isouter=True
+                    booked_rooms,
+                    booked_rooms.c.room_id == Rooms.id,
+                    isouter=True
                 ).where(Rooms.id == room_id).group_by(
                     Rooms.quantity, booked_rooms.c.room_id
                 )

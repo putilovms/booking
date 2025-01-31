@@ -1,6 +1,7 @@
 from datetime import date
 
 from fastapi import APIRouter, Depends, status
+from fastapi_versioning import version
 
 import app.exceptions as excep
 from app.bookings.dao import BookingDAO
@@ -8,7 +9,6 @@ from app.bookings.schemas import SBooking, SBookingAdd
 from app.tasks.tasks import send_booking_confirmation_email
 from app.users.auth import get_current_user
 from app.users.models import Users
-from fastapi_versioning import version
 
 router = APIRouter(
     prefix="/bookings",

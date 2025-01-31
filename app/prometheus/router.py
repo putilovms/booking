@@ -1,11 +1,13 @@
-from random import random
 import time
+from random import random
+
 from fastapi import APIRouter
 
 router = APIRouter(
     prefix="/prometheus",
     tags=["Grafana & Prometheus"]
 )
+
 
 @router.get("/get_error")
 def get_error():
@@ -14,10 +16,12 @@ def get_error():
     else:
         raise KeyError
 
+
 @router.get("/time_consumer")
 def time_consumer():
-    time.sleep(random()*5)
+    time.sleep(random() * 5)
     return 1
+
 
 @router.get("/memory_consumer")
 def memory_consumer():

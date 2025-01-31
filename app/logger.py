@@ -1,6 +1,8 @@
-from datetime import datetime, timezone
 import logging
+from datetime import datetime, timezone
+
 from pythonjsonlogger.json import JsonFormatter
+
 from app.config import settings
 
 logger = logging.getLogger()
@@ -18,7 +20,7 @@ class CustomJsonFomatter(JsonFormatter):
             log_record["level"] = log_record["level"].upper()
         else:
             log_record["level"] = record.levelname
-        return 
+        return
 
 
 formatter = CustomJsonFomatter(
