@@ -17,7 +17,7 @@ Python, PostgreSQL, UV, FastAPI, SQLAlchemy, pydantic, alembic, asyncio, sqladmi
 ## Installation
 
 1. Requires Python version 3.10 or higher and UV
-2. Clone the project: `>> git clone https://github.com/putilovms/booking.git`
+2. Clone the project: `>> git clone git@github.com:putilovms/booking.git`
 3. Create an `.env` file for example `.env.example` in the root of the project
 4. Install migrations with the command: `>> make update`
 5. Starting the server: `>> make run`
